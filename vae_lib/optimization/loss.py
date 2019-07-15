@@ -3,7 +3,7 @@ from __future__ import print_function
 import numpy as np
 import torch
 import torch.nn as nn
-from vae_lib.utils.distributions import log_normal_diag, log_normal_standard, log_bernoulli
+from inn_torch.external.ffjord.vae_lib.utils.distributions import log_normal_diag, log_normal_standard, log_bernoulli
 import torch.nn.functional as F
 
 

@@ -14,9 +14,9 @@ import torchvision.datasets as dset
 import torchvision.transforms as tforms
 from torchvision.utils import save_image
 
-import lib.layers as layers
-import lib.spectral_norm as spectral_norm
-import lib.utils as utils
+import inn_torch.external.ffjord.lib.layers as layers
+import inn_torch.external.ffjord.lib.spectral_norm as spectral_norm
+import inn_torch.external.ffjord.lib.utils as utils
 
 
 def add_noise(x):

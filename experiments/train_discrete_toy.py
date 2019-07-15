@@ -9,10 +9,10 @@ import time
 import torch
 import torch.optim as optim
 
-import lib.layers as layers
-import lib.toy_data as toy_data
-import lib.utils as utils
-from lib.visualize_flow import visualize_transform
+import inn_torch.external.ffjord.lib.layers as layers
+import inn_torch.external.ffjord.lib.toy_data as toy_data
+import inn_torch.external.ffjord.lib.utils as utils
+from inn_torch.external.ffjord.lib.visualize_flow import visualize_transform
 
 from train_misc import standard_normal_logprob
 from train_misc import count_parameters

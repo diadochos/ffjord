@@ -15,14 +15,14 @@ import os
 
 import datetime
 
-import lib.utils as utils
-import lib.layers.odefunc as odefunc
+import inn_torch.external.ffjord.lib.utils as utils
+import inn_torch.external.ffjord.lib.layers.odefunc as odefunc
 
-import vae_lib.models.VAE as VAE
-import vae_lib.models.CNFVAE as CNFVAE
-from vae_lib.optimization.training import train, evaluate
-from vae_lib.utils.load_data import load_dataset
-from vae_lib.utils.plotting import plot_training_curve
+import inn_torch.external.ffjord.vae_lib.models.VAE as VAE
+import inn_torch.external.ffjord.vae_lib.models.CNFVAE as CNFVAE
+from inn_torch.external.ffjord.vae_lib.optimization.training import train, evaluate
+from inn_torch.external.ffjord.vae_lib.utils.load_data import load_dataset
+from inn_torch.external.ffjord.vae_lib.utils.plotting import plot_training_curve
 
 SOLVERS = ["dopri5", "bdf", "rk4", "midpoint", 'adams', 'explicit_adams', 'fixed_adams']
 parser = argparse.ArgumentParser(description='PyTorch Sylvester Normalizing flows')

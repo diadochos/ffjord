@@ -19,8 +19,8 @@ import time
 import torch
 import torch.optim as optim
 
-import lib.utils as utils
-import lib.layers.odefunc as odefunc
+import inn_torch.external.ffjord.lib.utils as utils
+import inn_torch.external.ffjord.lib.layers.odefunc as odefunc
 
 from train_misc import standard_normal_logprob
 from train_misc import set_cnf_options, count_nfe, count_parameters, count_total_time

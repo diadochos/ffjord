@@ -91,7 +91,7 @@ if __name__ == '__main__':
 
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')))
 
-    import lib.toy_data as toy_data
+    import inn_torch.external.ffjord.lib.toy_data as toy_data
     from train_misc import count_parameters
     from train_misc import set_cnf_options, add_spectral_norm, create_regularization_fns
     from train_misc import build_model_tabular

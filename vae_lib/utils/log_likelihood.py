@@ -2,7 +2,7 @@ from __future__ import print_function
 import time
 import numpy as np
 from scipy.misc import logsumexp
-from vae_lib.optimization.loss import calculate_loss_array
+from inn_torch.external.ffjord.vae_lib.optimization.loss import calculate_loss_array
 
 
 def calculate_likelihood(X, model, args, logger, S=5000, MB=500):

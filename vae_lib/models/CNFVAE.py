@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
 from train_misc import build_model_tabular
-import lib.layers as layers
+import inn_torch.external.ffjord.lib.layers as layers
 from .VAE import VAE
-import lib.layers.diffeq_layers as diffeq_layers
-from lib.layers.odefunc import NONLINEARITIES
+import inn_torch.external.ffjord.lib.layers.diffeq_layers as diffeq_layers
+from inn_torch.external.ffjord.lib.layers.odefunc import NONLINEARITIES
 
 from torchdiffeq import odeint_adjoint as odeint
 

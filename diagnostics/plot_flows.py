@@ -16,11 +16,11 @@ import os
 
 import torch
 
-import lib.toy_data as toy_data
-import lib.utils as utils
-import lib.visualize_flow as viz_flow
-import lib.layers.odefunc as odefunc
-import lib.layers as layers
+import inn_torch.external.ffjord.lib.toy_data as toy_data
+import inn_torch.external.ffjord.lib.utils as utils
+import inn_torch.external.ffjord.lib.visualize_flow as viz_flow
+import inn_torch.external.ffjord.lib.layers.odefunc as odefunc
+import inn_torch.external.ffjord.lib.layers as layers
 
 from train_misc import standard_normal_logprob
 from train_misc import build_model_tabular, count_parameters

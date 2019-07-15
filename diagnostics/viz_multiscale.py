@@ -10,13 +10,13 @@ sys.path.insert(0, parent_dir)
 
 import argparse
 
-import lib.layers as layers
-import lib.odenvp as odenvp
+import inn_torch.external.ffjord.lib.layers as layers
+import inn_torch.external.ffjord.lib.odenvp as odenvp
 import torch
 import torchvision.transforms as tforms
 import torchvision.datasets as dset
 from torchvision.utils import save_image
-import lib.utils as utils
+import inn_torch.external.ffjord.lib.utils as utils
 
 from train_misc import add_spectral_norm, set_cnf_options, count_parameters
 

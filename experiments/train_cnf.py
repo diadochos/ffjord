@@ -9,10 +9,10 @@ import torchvision.datasets as dset
 import torchvision.transforms as tforms
 from torchvision.utils import save_image
 
-import lib.layers as layers
-import lib.utils as utils
-import lib.odenvp as odenvp
-import lib.multiscale_parallel as multiscale_parallel
+import inn_torch.external.ffjord.lib.layers as layers
+import inn_torch.external.ffjord.lib.utils as utils
+import inn_torch.external.ffjord.lib.odenvp as odenvp
+import inn_torch.external.ffjord.lib.multiscale_parallel as multiscale_parallel
 
 from train_misc import standard_normal_logprob
 from train_misc import set_cnf_options, count_nfe, count_parameters, count_total_time

@@ -2,9 +2,9 @@ from __future__ import print_function
 import time
 import torch
 
-from vae_lib.optimization.loss import calculate_loss
-from vae_lib.utils.visual_evaluation import plot_reconstructions
-from vae_lib.utils.log_likelihood import calculate_likelihood
+from inn_torch.external.ffjord.vae_lib.optimization.loss import calculate_loss
+from inn_torch.external.ffjord.vae_lib.utils.visual_evaluation import plot_reconstructions
+from inn_torch.external.ffjord.vae_lib.utils.log_likelihood import calculate_likelihood
 
 import numpy as np
 from train_misc import count_nfe, override_divergence_fn

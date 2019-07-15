@@ -2,8 +2,8 @@ from __future__ import print_function
 
 import torch
 import torch.nn as nn
-import vae_lib.models.flows as flows
-from vae_lib.models.layers import GatedConv2d, GatedConvTranspose2d
+import inn_torch.external.ffjord.vae_lib.models.flows as flows
+from inn_torch.external.ffjord.vae_lib.models.layers import GatedConv2d, GatedConvTranspose2d
 
 
 class VAE(nn.Module):

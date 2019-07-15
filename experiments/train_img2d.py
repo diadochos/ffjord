@@ -9,10 +9,9 @@ import time
 import torch
 import torch.optim as optim
 
-import lib.toy_data as toy_data
-import lib.utils as utils
-from lib.visualize_flow import visualize_transform
-import lib.layers.odefunc as odefunc
+import inn_torch.external.ffjord.lib.utils as utils
+from inn_torch.external.ffjord.lib.visualize_flow import visualize_transform
+import inn_torch.external.ffjord.lib.layers.odefunc as odefunc
 
 from train_misc import standard_normal_logprob
 from train_misc import set_cnf_options, count_nfe, count_parameters, count_total_time
@@ -24,10 +23,8 @@ from diagnostics.viz_toy import save_trajectory, trajectory_to_video
 
 SOLVERS = ["dopri5", "bdf", "rk4", "midpoint", 'adams', 'explicit_adams', 'fixed_adams']
 parser = argparse.ArgumentParser('Continuous Normalizing Flow')
-parser.add_argument(
-    '--data', choices=['swissroll', '8gaussians', 'pinwheel', 'circles', 'moons', '2spirals', 'checkerboard', 'rings'],
-    type=str, default='pinwheel'
-)
+parser.add_argument('--img', type=str, required=True)
+parser.add_argument('--data', type=str, default='dummy')
 parser.add_argument(
     "--layer_type", type=str, default="concatsquash",
     choices=["ignore", "concat", "concat_v2", "squash", "concatsquash", "concatcoord", "hyper", "blend"]
@@ -55,7 +52,7 @@ parser.add_argument('--batch_norm', type=eval, default=False, choices=[True, Fal
 parser.add_argument('--bn_lag', type=float, default=0)
 
 parser.add_argument('--niters', type=int, default=10000)
-parser.add_argument('--batch_size', type=int, default=100)
+parser.add_argument('--batch_size', type=int, default=1000)
 parser.add_argument('--test_batch_size', type=int, default=1000)
 parser.add_argument('--lr', type=float, default=1e-3)
 parser.add_argument('--weight_decay', type=float, default=1e-5)
@@ -87,6 +84,31 @@ logger.info(args)
 
 device = torch.device('cuda:' + str(args.gpu) if torch.cuda.is_available() else 'cpu')
 
+from PIL import Image
+import numpy as np
+
+img = np.array(Image.open(args.img).convert('L'))
+h, w = img.shape
+xx = np.linspace(-4, 4, w)
+yy = np.linspace(-4, 4, h)
+xx, yy = np.meshgrid(xx, yy)
+xx = xx.reshape(-1, 1)
+yy = yy.reshape(-1, 1)
+
+means = np.concatenate([xx, yy], 1)
+img = img.max() - img
+probs = img.reshape(-1) / img.sum()
+
+std = np.array([8 / w / 2, 8 / h / 2])
+
+
+def sample_data(data=None, rng=None, batch_size=200):
+    """data and rng are ignored."""
+    inds = np.random.choice(int(probs.shape[0]), int(batch_size), p=probs)
+    m = means[inds]
+    samples = np.random.randn(*m.shape) * std + m
+    return samples
+
 
 def get_transforms(model):
 
@@ -109,7 +131,7 @@ def compute_loss(args, model, batch_size=None):
     if batch_size is None: batch_size = args.batch_size
 
     # load data
-    x = toy_data.inf_train_gen(args.data, batch_size=batch_size)
+    x = sample_data(args.data, batch_size=batch_size)
     x = torch.from_numpy(x).type(torch.float32).to(device)
     zero = torch.zeros(x.shape[0], 1).to(x)
 
@@ -205,7 +227,7 @@ if __name__ == '__main__':
         if itr % args.viz_freq == 0:
             with torch.no_grad():
                 model.eval()
-                p_samples = toy_data.inf_train_gen(args.data, batch_size=2000)
+                p_samples = sample_data(args.data, batch_size=2000)
 
                 sample_fn, density_fn = get_transforms(model)
 
@@ -226,6 +248,6 @@ if __name__ == '__main__':
 
     save_traj_dir = os.path.join(args.save, 'trajectory')
     logger.info('Plotting trajectory to {}'.format(save_traj_dir))
-    data_samples = toy_data.inf_train_gen(args.data, batch_size=2000)
+    data_samples = sample_data(args.data, batch_size=2000)
     save_trajectory(model, data_samples, save_traj_dir, device=device)
     trajectory_to_video(save_traj_dir)
